@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Recomendaciones
+{% endblock %}
+
+{% block content %}
+
+
+<table class="table">
+	<thead class="table-dark">
+	  <tr>
+		<th scope="col">ID</th>
+		<th scope="col">Icono</th>
+		<th scope="col">Objeto</th>
+		<th scope="col">Características</th>
+		<th scope="col">Nivel</th>
+		<th scope="col">Score</th>
+		<th scope="col">Acciones</th>
+	  </tr>
+	</thead>
+	<tbody>
+		
+	{% for item,keywords in items %}
+	<tr>
+		<th scope="row">{{item.0.id}}</th>
+		<td><img src= {{item.0.url_icono}} width=36 height=36</td>
+		<td><a href= {{item.0.url}}>{{item.0.nombre}}</a></td>
+		<td>{{keywords}}</td>
+		<td>{{item.0.ilvl}}</td>
+		<td>{{item.1|floatformat:2}}</td>
+		<td><a href="/add-item/?id={{item.0.id}}" type="button" class="btn btn-primary">Añadir</a></td>
+	</tr>
+	{% endfor %}
+	</tbody>
+  </table>
+
+{% endblock %}

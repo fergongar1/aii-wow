@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{titulo}}
+{% endblock %}
+
+{% block content %}
+{% if message %}
+	<div class="alert alert-success" role="alert">
+		{{ message }}
+  	</div>
+{% endif %}
+<table class="table">
+	<thead class="table-dark">
+	  <tr>
+		<th scope="col">ID</th>
+		<th scope="col">Icono</th>
+		<th scope="col">Objeto</th>
+		<th scope="col">Equipado en</th>
+		<th scope="col">Tipo</th>
+		<th scope="col">Nivel</th>
+		{% if request.user.is_authenticated %}
+			<th scope="col">Acciones</th>
+		{% endif %}
+	  </tr>
+	</thead>
+	<tbody>
+		
+	{% for item in items %}
+	<tr>
+		<th scope="row">{{item.id}}</th>
+		<td><img src= {{item.url_icono}} width=36 height=36</td>
+		<td><a href= {{item.url}}>{{item.nombre}}</a></td>
+		<td>{{item.slot}}</td>
+		<td>{{item.tipo}}</td>
+		<td>{{item.ilvl}}</td>
+		{% if request.user.is_authenticated %}
+			{% if item in useritems %}
+				<td><a href="/remove-item/?id={{item.id}}" type="button" class="btn btn-danger">Eliminar</a></td>
+			{% else %}
+				<td><a href="/add-item/?id={{item.id}}" type="button" class="btn btn-primary">Añadir</a></td>
+			{% endif %}
+		{% endif %}
+	</tr>
+	{% endfor %}
+	</tbody>
+  </table>
+
+{% endblock %}
